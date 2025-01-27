@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+</head>
+<body>
+  <h1>Admin Panel</h1>
+  <form action="/admin/add" method="POST">
+    <input type="text" name="username" placeholder="Username" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <label>
+      <input type="checkbox" name="admin" /> Admin
+    </label>
+    <button type="submit">Add User</button>
+  </form>
+  <ul>
+    <% users.forEach(user => { %>
+      <li>
+        <%= user.username %> (Admin: <%= user.admin %>)
+        <form action="/admin/delete/<%= user._id %>" method="POST" style="display:inline;">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    <% }); %>
+  </ul>
+</body>
+</html>
