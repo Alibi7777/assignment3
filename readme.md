@@ -1,3 +1,5 @@
+password for db is 1234
+
 Description
 
 This is a simple Node.js-based User Management System integrated with MongoDB Atlas. It provides the following functionalities:
