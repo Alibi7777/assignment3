@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Electronics Shop</title>
+    <link rel="stylesheet" href="/css/contact.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/"><h1>Electronics Shop</h1></a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/cart">Cart</a>
+        <a href="/favourites">Favourites</a>
+        <a href="/faq">Faq</a>
+        <a href="/contact" class="active">Contact Us</a>
+      </nav>
+      <a href="/login" class="login-button">Login</a>
+    </header>
+
+    <main>
+      <section class="contact-form">
+        <h2>We'd Love to Hear From You</h2>
+
+        <!-- Quote Section -->
+        <% if (quote) { %>
+        <blockquote class="quote">
+          "<%= quote.quote.body %>"
+          <footer>- <%= quote.quote.author %></footer>
+        </blockquote>
+        <% } else { %>
+        <p class="error">Failed to load a quote. Please try again later.</p>
+        <% } %>
+
+        <!-- Contact Form -->
+        <form id="contact-form" action="/submit-contact" method="POST">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+
+          <div style="display: flex">
+            <button id="main_button" type="submit">Send Message</button>
+            <button
+              id="reset_button"
+              type="button"
+              style="background-color: #fe3838"
+              onclick="document.getElementById('contact-form').reset()"
+            >
+              Reset Button
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Electronics</h3>
+        </div>
+        <div class="footer-column">
+          <h3>Pages</h3>
+          <ul>
+            <li>Cart</li>
+            <li>Contact Us</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Creators</h3>
+          <ul>
+            <li>Ospan A.</li>
+            <li>Sanakov Y.</li>
+            <li>IT-2308</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Electronics Shop</p>
+      </div>
+    </footer>
+  </body>
+</html>

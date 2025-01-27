@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart - Electronics Shop</title>
+    <link rel="stylesheet" href="style/cart.css" />
+    <script src="js/displayCart.js" defer></script>
+    <script src="js/cart.js" defer></script>
+    <script defer src="js/auth.js"></script>
+    <script defer src="js/theme.js"></script>
+  </head>
+  <body>
+    <header>
+      <a href="index.html"><h1>Electronics Shop</h1></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html" class="active">Cart</a>
+        <a href="favourites.html">Favourites</a>
+        <a href="faq.html">Faq</a>
+        <a href="contact.html">Contact Us</a>
+      </nav>
+      <a href="login.html" class="login-button">Login</a>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="cart-header">
+          <h2>Your Cart</h2>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Electronics</h3>
+        </div>
+        <div class="footer-column">
+          <h3>Pages</h3>
+          <ul>
+            <li>Cart</li>
+            <li>Contact Us</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Creators</h3>
+          <ul>
+            <li>Ospan A.</li>
+            <li>Sanakov Y.</li>
+            <li>Zharasuly M.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Electronics Shop</p>
+      </div>
+    </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+        const loginButton = document.querySelector(".login-button");
+
+        if (loggedInUser && loginButton) {
+          const userNameDisplay = document.createElement("span");
+          userNameDisplay.textContent = loggedInUser.name;
+          userNameDisplay.classList.add("user-name");
+
+          loginButton.parentNode.replaceChild(userNameDisplay, loginButton);
+        }
+
+        const products = [
+          {
+            id: "1",
+            name: "Combo Deal - Save $125.00",
+            price: 427.97,
+            image: "pictures/combo-deal.png",
+            description:
+              "Intel Core i7 + Corsair Vengeance RAM + ASUS ROG Strix Z690",
+          },
+          {
+            id: "2",
+            name: "Desktop Computers - Save $30.00",
+            price: 2489.97,
+            image: "pictures/desktop-computer-image.png",
+            description: "ABS Gaming PC + Acer Monitor + Razer Headset",
+          },
+          {
+            id: "3",
+            name: "Google Pixel 9",
+            price: 579,
+            image: "pictures/phone1.png",
+            description: "Google Pixel 9 - Save $400",
+          },
+        ];
+
+        localStorage.setItem("products", JSON.stringify(products));
+      });
+    </script>
+  </body>
+</html>

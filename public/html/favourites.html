@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favourites - Electronics Shop</title>
+    <link rel="stylesheet" href="style/favourites.css" />
+    <script src="js/favourites.js" defer></script>
+    <script src="js/displayFavourites.js" defer></script>
+    <script defer src="js/auth.js"></script>
+  </head>
+  <body>
+    <header>
+      <a href="index.html"><h1>Electronics Shop</h1></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+        <a href="favourites.html" class="active">Favourites</a>
+        <a href="faq.html">Faq</a>
+        <a href="contact.html">Contact Us</a>
+      </nav>
+      <a href="login.html" class="login-button">Login</a>
+    </header>
+
+    <main>
+      <section class="favourites-list">
+        <h2>Your Favourite Products</h2>
+        <!-- Products will be dynamically inserted here -->
+        <div id="favourites-container"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Electronics</h3>
+        </div>
+        <div class="footer-column">
+          <h3>Pages</h3>
+          <ul>
+            <li>Cart</li>
+            <li>Contact Us</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Creators</h3>
+          <ul>
+            <li>Ospan A.</li>
+            <li>Sanakov Y.</li>
+            <li>Zharasuly M.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Electronics Shop</p>
+      </div>
+    </footer>
+
+    <script>
+      document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const productId = event.target.getAttribute("data-product-id");
+          addToCart(productId, products);
+        });
+      });
+
+      function addToCart(productId, products) {
+        const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        const product = products.find((p) => p.id === productId);
+
+        if (product) {
+          const user = JSON.parse(localStorage.getItem("currentUser"));
+          product.user_email = user ? user.email : "guest@example.com";
+          cartItems.push(product);
+          localStorage.setItem("cartItems", JSON.stringify(cartItems));
+          alert(`${product.name} has been added to the cart.`);
+        } else {
+          console.error("Product not found!");
+        }
+      }
+    </script>
+  </body>
+</html>

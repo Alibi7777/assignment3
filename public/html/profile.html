@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile - Electronics Shop</title>
+    <link rel="stylesheet" href="style/profile.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to Your Profile</h1>
+    </header>
+
+    <main>
+      <section class="profile-section">
+        <h2>User Information</h2>
+        <div class="profile-info">
+          <label>Email:</label>
+          <p id="user-email"></p>
+        </div>
+        <div class="profile-info">
+          <label>Full Name:</label>
+          <p id="user-fullname"></p>
+        </div>
+        <!-- Add more user information fields here if needed -->
+        <button id="logout-button">Logout</button>
+      </section>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const userEmail = localStorage.getItem("userEmail");
+        const userFullName = localStorage.getItem("userFullName");
+        const emailElement = document.getElementById("user-email");
+        const fullNameElement = document.getElementById("user-fullname");
+        const logoutButton = document.getElementById("logout-button");
+
+        if (userEmail && userFullName) {
+          emailElement.textContent = userEmail;
+          fullNameElement.textContent = userFullName;
+        } else {
+          window.location.href = "login.html"; // Redirect to login if not logged in
+        }
+
+        logoutButton.addEventListener("click", function () {
+          localStorage.removeItem("userEmail");
+          localStorage.removeItem("userFullName");
+          window.location.href = "index.html"; // Redirect to homepage after logout
+        });
+      });
+    </script>
+  </body>
+</html>

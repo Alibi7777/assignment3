@@ -1,0 +1,144 @@
+/* Reset some basic styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  text-align: center;
+}
+
+.logo {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+input[type="submit"],
+.secondary-button {
+  width: 100%;
+  padding: 10px;
+  background-color: orange;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+input[type="submit"]:hover,
+.secondary-button:hover {
+  background-color: darkorange;
+}
+
+a {
+  color: #0073e6;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.separator {
+  margin: 20px 0;
+  font-size: 14px;
+  color: #888;
+}
+
+.social-login button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.social-login button:hover {
+  background-color: #f0f0f0;
+}
+
+.google-login {
+  background-image: url("google-icon.png"); /* Add a small Google icon image here */
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  padding-left: 40px;
+}
+
+.apple-login {
+  background-image: url("apple-icon.png"); /* Add a small Apple icon image here */
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  padding-left: 40px;
+}
+
+.footer {
+  margin-top: 30px;
+  font-size: 12px;
+  color: #888;
+}
+
+.footer a {
+  color: #888;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

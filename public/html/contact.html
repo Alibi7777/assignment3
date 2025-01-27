@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Electronics Shop</title>
+    <link rel="stylesheet" href="css/contact.css" />
+    <script defer src="js/contact.js"></script>
+    <script defer src="js/auth.js"></script>
+    <script defer src="js/contact.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <a href="index.html"><h1>Electronics Shop</h1></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+        <a href="favourites.html">Favourites</a>
+        <a href="faq.html">Faq</a>
+        <a href="contact.html" class="active">Contact Us</a>
+      </nav>
+      <a href="login.html" class="login-button">Login</a>
+    </header>
+
+    <main>
+      `
+      <section class="contact-form">
+        <h2>We'd Love to Hear From You</h2>
+        <form id="contact-form">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+
+          <div style="display: flex">
+            <button id="main_button" type="button">Send Message</button>
+            <button
+              id="reset_button"
+              type="button"
+              style="background-color: #fe3838"
+            >
+              Reset button
+            </button>
+          </div>
+        </form>
+
+        <div id="feedback"></div>
+        <!-- Quote or feedback will appear here -->
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Electronics</h3>
+        </div>
+        <div class="footer-column">
+          <h3>Pages</h3>
+          <ul>
+            <li>Cart</li>
+            <li>Contact Us</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Creators</h3>
+          <ul>
+            <li>Ospan A.</li>
+            <li>Sanakov Y.</li>
+            <li>Zharasuly M.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Electronics Shop</p>
+      </div>
+    </footer>
+  </body>
+</html>
