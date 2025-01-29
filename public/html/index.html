@@ -17,11 +17,11 @@
     <script defer src="js/displayFavourites.js" defer></script>
   </head>
   <body>
-    <header>  
+    <header>
       <a href="index.html"><h1>Electronics Shop</h1></a>
       <nav id="nav-menu" class="nav-menu">
         <a href="index.html" class="active">Home</a>
-        <a href="cart.html">Cart</a>
+        <a href="cart">Cart</a>
         <a href="favourites.html">Favourites</a>
         <a href="faq.html">Faq</a>
         <a href="contact">Contact Us</a>
@@ -39,13 +39,7 @@
           style="max-width: 24px; max-height: 24px; cursor: pointer"
         />
       </button>
-
       <a href="login" class="login-button">Login</a>
-
-      <!-- <div class="current-date-time">
-        <p id="date"></p>
-        <p id="time"></p>
-      </div> -->
     </header>
 
     <main class="content-container">
@@ -85,61 +79,7 @@
       <div class="product-category">
         <p id="product-category-name"></p>
       </div>
-      <section class="product-grid" id="products_list">
-        <!-- <div class="product-card">
-          <img
-            src="pictures/combo-deal.png"
-            alt="Combo Deal Image"
-            class="product-image"
-          />
-          <div class="product-details">
-            <h4>Combo Deal</h4>
-            <p class="product-price">$427.97</p>
-            <button class="add-to-cart-btn" data-product-id="1">
-              Add to Cart
-            </button>
-            <button class="add-to-favourites-btn" data-product-id="1">
-              Add to Favourites
-            </button>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <img
-            src="pictures/desktop-computer-image.png"
-            alt="Desktop Computers Image"
-            class="product-image"
-          />
-          <div class="product-details">
-            <h4>Desktop Computers</h4>
-            <p class="product-price">$2,489.97</p>
-            <button class="add-to-cart-btn" data-product-id="2">
-              Add to Cart
-            </button>
-            <button class="add-to-favourites-btn" data-product-id="2">
-              Add to Favourites
-            </button>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <img
-            src="pictures/phone1.png"
-            alt="Google Pixel 9"
-            class="product-image"
-          />
-          <div class="product-details">
-            <h4>Google Pixel 9</h4>
-            <p class="product-price">$579.00</p>
-            <button class="add-to-cart-btn" data-product-id="3">
-              Add to Cart
-            </button>
-            <button class="add-to-favourites-btn" data-product-id="3">
-              Add to Favourites
-            </button>
-          </div>
-        </div> -->
-      </section>
+      <section class="product-grid" id="products_list"></section>
     </main>
 
     <footer>
@@ -315,77 +255,5 @@
         });
       });
     </script>
-
-    <!-- <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-        const loginButton = document.querySelector(".login-button");
-
-        if (loggedInUser && loginButton) {
-          const userNameDisplay = document.createElement("span");
-          userNameDisplay.textContent = loggedInUser.name;
-          userNameDisplay.classList.add("user-name");
-          loginButton.parentNode.replaceChild(userNameDisplay, loginButton);
-        }
-
-        const productContainer = document.getElementById("products_list");
-
-        // Fetch products from mock API
-        try {
-          const response = await fetch(
-            "https://671f55f7e7a5792f052de069.mockapi.io/api/contact/products",{}   
-          );
-          const products = await response.json();
-
-          // Display products on the page
-          products.forEach((item) => {
-            const productHTML = `
-        <div class="product-card" data-id="${item.id}">
-          <img src="${item.image}" alt="${item.name}" class="product-image" />
-          <div class="product-details">
-            <h4>${item.name}</h4>
-            <p>Price: $${item.price.toFixed(2)}</p>
-            <button class="add-to-cart-btn" data-product-id="${
-              item.id
-            }">Add to Cart</button>
-            <button class="add-to-favourites-btn" data-product-id="${
-              item.id
-            }">Add to Favourites</button>
-          </div>
-        </div>
-      `;
-            productContainer.insertAdjacentHTML("beforeend", productHTML);
-          });
-
-          // Add event listeners for "Add to Cart" and "Add to Favourites" buttons
-          document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
-            button.addEventListener("click", (event) => {
-              const productId = event.target.getAttribute("data-product-id");
-              addToCart(productId, products);
-            });
-          });
-        } catch (error) {
-          console.error("Error fetching products:", error);
-          productContainer.innerHTML =
-            "<p>Failed to load products. Please try again later.</p>";
-        }
-      });
-
-      // Add to Cart functionality
-      function addToCart(productId, products) {
-        const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-        const product = products.find((p) => p.id === productId);
-
-        if (product) {
-          const user = JSON.parse(localStorage.getItem("currentUser"));
-          product.user_email = user ? user.email : "guest@example.com"; // Add user email if available
-          cartItems.push(product);
-          localStorage.setItem("cartItems", JSON.stringify(cartItems));
-          alert(`${product.name} has been added to the cart.`);
-        } else {
-          console.error("Product not found!");
-        }
-      }
-    </script> -->
   </body>
 </html>

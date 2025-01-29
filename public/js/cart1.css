@@ -1,0 +1,218 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  min-height: calc(100vh - 300px - 78px);
+}
+
+header {
+  background-color: #007acc;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+nav {
+  flex-grow: 1;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+  padding-bottom: 5px;
+  position: relative;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+nav a.active {
+  border-bottom: 3px solid #d08e32;
+  color: #d08e32;
+}
+
+.login-button {
+  background-color: #115b8c;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-header h2 {
+  font-size: 24px;
+}
+
+/* Slide-in animation for cart products */
+.cart-product {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid #ccc;
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.product-image img {
+  width: 150px;
+  height: auto;
+}
+
+.product-details {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.product-details h3 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.product-details p {
+  margin: 5px 0;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Fade-in animation for checkout section */
+.checkout-section {
+  margin-top: 20px;
+  text-align: right;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards 0.5s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.checkout-section p {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.checkout-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Hover scale effect for delete button */
+.delete-btn {
+  cursor: pointer;
+  width: 24px; /* Adjust size as needed */
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+
+footer {
+  background-color: #007acc;
+  color: #fff;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+.footer-column {
+  flex: 1;
+}
+
+.footer-column h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin: 8px 0;
+  color: #ccc;
+}
+
+.footer-bottom {
+  border-top: 1px solid #fff;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.footer-bottom p {
+  color: #fff;
+  font-size: 14px;
+}

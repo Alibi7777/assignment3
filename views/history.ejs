@@ -1,0 +1,25 @@
+<h1>History</h1>
+
+<h2>Currency Exchange History</h2>
+<ul>
+  <% currencyHistory.forEach(entry => { %>
+  <li>
+    <strong>User:</strong> <%= entry.user %> | <%= entry.baseCurrency %> → <%=
+    entry.targetCurrency %>: <%= entry.exchangeRate %> (Date: <%=
+    entry.timestamp.toLocaleString() %>)
+  </li>
+  <% }) %>
+</ul>
+
+<h2>Product Review History</h2>
+<ul>
+  <% reviewHistory.forEach(entry => { %>
+  <li>
+    <strong>Product:</strong> <%= entry.title %> | <strong>Price:</strong> $<%=
+    entry.price %> | <strong>Rating:</strong> <%= entry.rating %> (Based on <%=
+    entry.reviewCount %> reviews)
+  </li>
+  <% }) %>
+</ul>
+
+<a href="/">Back</a>

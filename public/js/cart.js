@@ -1,61 +1,122 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+document.addEventListener('DOMContentLoaded', async () => {
+  const cartContainer = document.querySelector('.cart-header')
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || []
 
-  addToCartButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const productId = button.getAttribute("data-product-id");
-      addToCart(productId);
-    });
-  });
+  // Удаляем дубликаты товаров по `id`
+  const uniqueItems = []
+  const seen = new Set()
 
-  const products = [
-    {
-      id: "1",
-      name: "Combo Deal - Save $125.00",
-      price: 427.97,
-      image: "pictures/combo-deal.png",
-      category: "phone",
-      description:
-        "Intel Core i7 + Corsair Vengeance RAM + ASUS ROG Strix Z690",
-    },
-    {
-      id: "2",
-      name: "Desktop Computers - Save $30.00",
-      price: 2489.97,
-      image: "pictures/desktop-computer-image.png",
-      description: "ABS Gaming PC + Acer Monitor + Razer Headset",
-    },
-    {
-      id: "3",
-      name: "Google Pixel 9",
-      price: 579,
-      image: "pictures/phone1.png",
-      description: "Google Pixel 9 - Save $400",
-    },
-  ];
+  cartItems.forEach(item => {
+    if (!seen.has(item.id)) {
+      seen.add(item.id)
+      uniqueItems.push(item)
+    }
+  })
 
-  localStorage.setItem("products", JSON.stringify(products));
+  localStorage.setItem('cartItems', JSON.stringify(uniqueItems))
+  cartItems = uniqueItems
 
-  function addToCart(productId) {
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const product = products.find((p) => p.id === productId);
+  // Если корзина пуста
+  if (cartContainer && cartItems.length === 0) {
+    cartContainer.innerHTML += '<p>Your cart is empty.</p>'
+    return
+  }
 
-    if (product) {
-      const user = JSON.parse(localStorage.getItem("currentUser"));
-      product.user_email = user.email;
-      cartItems.push(product);
+  cartContainer.innerHTML = '' // Очищаем контейнер перед добавлением товаров
 
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-      alert(`${product.name} has been added to the cart.`);
-    } else {
-      console.error("Product not found!");
+  for (const item of cartItems) {
+    try {
+      // Запрос на сервер для получения отзывов по `productId`
+      const response = await fetch(`/get-reviews?productId=${item.id}`)
+      const reviewData = await response.json()
+
+      // Создаем карточку товара с отзывами в старом (твоем) стиле
+      const productElement = document.createElement('div')
+      productElement.classList.add('cart-item')
+      productElement.innerHTML = `
+        <div class="cart-item-content">
+          <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+          <div class="cart-item-info">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <p>Price: $${item.price.toFixed(2)}</p>
+            <p>⭐ Rating: ${reviewData.rating} (${
+        reviewData.reviewCount
+      } reviews)</p>
+            <button class="remove-btn" data-id="${item.id}">🗑️</button>
+          </div>
+        </div>
+      `
+
+      cartContainer.appendChild(productElement)
+    } catch (error) {
+      console.error(`Error fetching review for product ${item.id}:`, error)
     }
   }
-});
-function removeFromCart(index) {
-  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-  cartItems.splice(index, 1); // Remove the item at the specified index
-  localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  alert("Item removed from the cart.");
-  window.location.reload(); // Refresh the cart page
+
+  // Обработчик кнопки удаления
+  document.querySelectorAll('.remove-btn').forEach(button => {
+    button.addEventListener('click', event => {
+      const productId = event.target.getAttribute('data-id')
+      removeFromCart(productId)
+    })
+  })
+
+  // Добавляем секцию с итоговой суммой и кнопкой Checkout
+  const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0)
+
+  const checkoutSection = document.createElement('div')
+  checkoutSection.classList.add('checkout-section')
+  checkoutSection.innerHTML = `
+  <p>Total: <strong>$${totalPrice.toFixed(2)}</strong></p>
+  <button class="checkout-btn">Proceed to Checkout</button>
+`
+
+  cartContainer.appendChild(checkoutSection)
+
+  document
+    .querySelector('.checkout-btn')
+    .addEventListener('click', async () => {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || []
+
+      if (cartItems.length === 0) {
+        alert('Your cart is empty!')
+        return
+      }
+
+      try {
+        const response = await fetch('/pay', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ cartItems })
+        })
+
+        const data = await response.json()
+        if (data.approval_url) {
+          window.location.href = data.approval_url // Переход на PayPal
+        } else {
+          alert('Error during payment')
+        }
+      } catch (error) {
+        console.error('Error during checkout:', error)
+      }
+    })
+})
+
+// Функция удаления товаров из корзины
+function removeFromCart (productId) {
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || []
+  cartItems = cartItems.filter(item => item.id !== productId)
+  localStorage.setItem('cartItems', JSON.stringify(cartItems))
+  alert('Item removed from the cart.')
+  location.reload()
 }
+
+// Обработчик нажатия на кнопку Checkout
+// document.querySelector('.checkout-btn').addEventListener('click', () => {
+//   localStorage.removeItem('cartItems')
+//   alert('Thank you for your purchase!')
+//   window.location.reload()
+// })

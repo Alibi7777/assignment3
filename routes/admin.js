@@ -4,8 +4,12 @@ const User = require('../models/User');
 const router = express.Router();
 
 router.get('/admin', async (req, res) => {
-  if (!req.session.user || !req.session.user.admin) {
-    return res.status(403).send('Access denied');
+  if (!req.session.user) {
+    return res.status(403).send('Access denied: No user session found');
+  }
+
+  if (!req.session.user.admin) {
+    return res.status(403).send('Access denied: Not an admin');
   }
 
   const users = await User.find();
