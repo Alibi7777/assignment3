@@ -1,33 +1,82 @@
 password for db is 1234
 
-Description
+admin gmail: alibialibi@gmail.com, password: 123456789 and you have access to /admin
 
-This is a simple Node.js-based User Management System integrated with MongoDB Atlas. It provides the following functionalities:
+account for **PayPal** \_TEST
+email: sb-eibpy37225871@personal.example.com
+password: mB@61uG4
+(this acc is needed when you click to the proceed to checkout)
 
-User Registration: Allows users to sign up with a username and password.
+1.  Login Page & Admin Panel
 
-User Login: Authenticates users based on their credentials.
+    Implemented Secure Login System
 
-Admin Panel: Enables administrators to manage users (add, edit, delete).
+    Users can log in with username and password stored securely in MongoDB Atlas.
 
-Features
+    Passwords are hashed before saving to the database.
 
-Registration:
+    JWT (JSON Web Token) is generated upon successful login to authenticate users.
+    Username is displayed in place of the "Login" button after login.
 
-Users can register with their username and password.
+    Login page redirects to the main page upon successful login.
 
-User information is stored in the MongoDB Atlas database.
+    User Data Storage in MongoDB Atlas
 
-Admin users are automatically identified by their username (e.g., your_admin_name).
+2.  Admin Panel Functionality
+    Admins can access /admin route (protected by JWT authentication).
 
-Login:
+    Created an admin dashboard (admin.ejs).
 
-Validates user credentials.
+    Admins can:
 
-Redirects to the main page upon successful login.
+    1. View all users in a table format (with name & role).
+    2. Edit users (change username and role).
+    3. Delete users permanently.
+    4. Add new users (with email, username, password, and role).
+    5. Assign admin role to other users.
+    6. Implemented authentication middleware to ensure only admins can access /admin.
 
-Admin Panel:
+3.  Implemented /admin/history Route **_////////_**
 
-Admins can view all users.
+    Created adminHistory.ejs page where admins can view API request logs.
 
-Admins can add, edit, and delete users.
+    The history page displays user interactions with APIs, including:
+    API name
+    Requested endpoint
+    User who made the request
+    Timestamp
+    API response
+
+4.  PayPal API Integration
+    We implemented a full PayPal payment system, including:
+
+    User adds products to the cart.
+    User clicks "Pay Now", triggering the /paypal/pay endpoint.
+    The system creates a PayPal order and redirects the user to PayPal.
+    User completes payment on PayPal.
+    PayPal redirects the user back to /paypal/complete-order.
+    The system captures the payment and stores transaction details.
+
+5.  Mock API Integration for Products
+    To simulate a real-world e-commerce experience, we integrated a Mock API to fetch product data dynamically.
+
+    Fetching Products from Mock API
+    Instead of using a database for products, we fetch them from MockAPI:
+
+    API Endpoint:
+    https://671f55f7e7a5792f052de069.mockapi.io/api/contact/products
+    Stores product details such as:
+    Product Name
+    Price
+    Image
+    Description
+    Products are dynamically loaded on the front-end.
+
+6.  Clean Code & Structure AND Designed EJS templates
+    Organized backend code into separate routes & controllers **_ / _**
+
+        Designed EJS templates for:
+                Login (login.ejs)
+                Admin panel (admin.ejs)
+                History page (adminHistory.ejs)
+                Main index page (index.ejs)

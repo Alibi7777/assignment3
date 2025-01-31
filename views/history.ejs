@@ -2,24 +2,30 @@
 
 <h2>Currency Exchange History</h2>
 <ul>
-  <% currencyHistory.forEach(entry => { %>
+  <% if (currencyHistory && currencyHistory.length > 0) { %> <%
+  currencyHistory.forEach(entry => { %>
   <li>
     <strong>User:</strong> <%= entry.user %> | <%= entry.baseCurrency %> → <%=
     entry.targetCurrency %>: <%= entry.exchangeRate %> (Date: <%=
-    entry.timestamp.toLocaleString() %>)
+    entry.timestamp ? entry.timestamp.toLocaleString() : 'Unknown' %>)
   </li>
-  <% }) %>
+  <% }) %> <% } else { %>
+  <li>No exchange history available.</li>
+  <% } %>
 </ul>
 
 <h2>Product Review History</h2>
 <ul>
-  <% reviewHistory.forEach(entry => { %>
+  <% if (reviewHistory && reviewHistory.length > 0) { %> <%
+  reviewHistory.forEach(entry => { %>
   <li>
     <strong>Product:</strong> <%= entry.title %> | <strong>Price:</strong> $<%=
-    entry.price %> | <strong>Rating:</strong> <%= entry.rating %> (Based on <%=
-    entry.reviewCount %> reviews)
+    entry.price %> | <strong>Rating:</strong> <%= entry.rating || 'No rating' %>
+    (Based on <%= entry.reviewCount || 'No reviews' %> reviews)
   </li>
-  <% }) %>
+  <% }) %> <% } else { %>
+  <li>No review history available.</li>
+  <% } %>
 </ul>
 
 <a href="/">Back</a>

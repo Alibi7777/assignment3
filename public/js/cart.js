@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   for (const item of cartItems) {
     try {
       // Запрос на сервер для получения отзывов по `productId`
-      const response = await fetch(`/get-reviews?productId=${item.id}`)
+      const response = await fetch(`/user/get-reviews?productId=${item.id}`)
       const reviewData = await response.json()
 
       // Создаем карточку товара с отзывами в старом (твоем) стиле
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       try {
-        const response = await fetch('/pay', {
+        const response = await fetch('/paypal/pay', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

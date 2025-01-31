@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Electronics Shop - Home</title>
     <link rel="stylesheet" href="css/index2.css" />
-    <script defer src="js/popup.js"></script>
-    <script defer src="js/background-color.js"></script>
-    <script defer src="js/date-time.js"></script>
     <script defer src="js/theme.js"></script>
     <script defer src="js/menu-toggle.js"></script>
-    <script defer src="js/auth.js"></script>
+
     <script defer src="js/cart.js"></script>
     <script defer src="displayCart.js"></script>
     <script defer src="js/favourites.js" defer></script>
@@ -39,7 +36,11 @@
           style="max-width: 24px; max-height: 24px; cursor: pointer"
         />
       </button>
-      <a href="login" class="login-button">Login</a>
+      <a href="login" id="login-btn" class="login-button">Login</a>
+      <div id="user-info" style="display: none">
+        <span id="username-display"></span>
+        <button id="logout-btn" class="logout-button">Logout</button>
+      </div>
     </header>
 
     <main class="content-container">
@@ -135,9 +136,30 @@
         );
         let products = [];
 
+        const token = localStorage.getItem("token");
+        const username = localStorage.getItem("user");
+        const loginButton = document.getElementById("login-btn");
+        const userInfo = document.getElementById("user-info");
+        const usernameDisplay = document.getElementById("username-display");
+        const logoutButton = document.getElementById("logout-btn");
+
+        if (token && username) {
+          // ✅ Show user info and hide login button
+          usernameDisplay.textContent = username;
+          userInfo.style.display = "flex";
+          loginButton.style.display = "none";
+        }
+
+        logoutButton.addEventListener("click", () => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          ("You have been logged out.");
+          window.location.reload();
+        });
+
         // Fetch products from mock API
         try {
-          const response = await fetch("products");
+          const response = await fetch("/user/products");
           products = await response.json();
           displayProducts(products);
         } catch (error) {

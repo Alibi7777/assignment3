@@ -1,83 +1,56 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const registerForm = document.getElementById("registerForm");
-  const nameInput = document.getElementById("name");
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const confirmPasswordInput = document.getElementById("confirm-password");
-  const showErrorDiv = document.getElementById("showErrorRegister");
+document.addEventListener('DOMContentLoaded', function () {
+  const registerForm = document.getElementById('registerForm')
+  const showErrorDiv = document.getElementById('showErrorRegister')
 
-  registerForm.addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent default form submission
-    clearErrorMessages();
+  registerForm.addEventListener('submit', async function (event) {
+    event.preventDefault()
+    clearErrorMessages()
 
-    let isValid = true;
-    let errorMessages = [];
+    const firstname = document.getElementById('name').value.trim()
+    const email = document.getElementById('email').value.trim()
+    const password = document.getElementById('password').value
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    if (nameInput.value.trim() === "") {
-      errorMessages.push("Full Name is required.");
-      isValid = false;
+    // 🔹 Validate password length
+    if (password.length < 6) {
+      displayErrors(['Password must be at least 6 characters long.'])
+      return // Stop form submission
     }
 
-    if (!isValidEmail(emailInput.value)) {
-      errorMessages.push("Please enter a valid email address.");
-      isValid = false;
-    } else {
-      const emailExists = users.some(
-        (user) => user.email === emailInput.value.trim()
-      );
-      if (emailExists) {
-        errorMessages.push("This email is already registered.");
-        isValid = false;
+    const user = { firstname, email, password }
+
+    try {
+      const response = await fetch('http://localhost:3000/user/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        alert('Registration successful! Please log in.')
+        window.location.href = 'login'
+      } else {
+        displayErrors([data.message])
       }
+    } catch (error) {
+      console.error('Error:', error)
+      displayErrors(['Server error. Please try again later.'])
     }
+  })
 
-    if (passwordInput.value.length < 8) {
-      errorMessages.push("Password must be at least 8 characters long.");
-      isValid = false;
-    }
-
-    if (passwordInput.value !== confirmPasswordInput.value) {
-      errorMessages.push("Passwords do not match.");
-      isValid = false;
-    }
-
-    if (isValid) {
-      const user = {
-        name: nameInput.value.trim(),
-        email: emailInput.value.trim(),
-        password: passwordInput.value,
-      };
-
-      users.push(user);
-      localStorage.setItem("users", JSON.stringify(users));
-      localStorage.setItem("currentUser", JSON.stringify(user)); // Set current user
-
-      alert("Registration successful!");
-      window.location.href = "http://localhost:3000/";  // Redirect to home page
-    } else {
-      displayErrors(errorMessages);
-    }
-  });
-
-  function displayErrors(errors) {
-    showErrorDiv.innerHTML = ""; // Clear previous errors
-    errors.forEach((error) => {
-      const errorElement = document.createElement("div");
-      errorElement.classList.add("error-message");
-      errorElement.textContent = error;
-      showErrorDiv.appendChild(errorElement); // Append each error message as a child
-    });
-    showErrorDiv.style.color = "red"; // Optional: style the error text
+  function displayErrors (errors) {
+    showErrorDiv.innerHTML = '' // Clear previous errors
+    errors.forEach(error => {
+      const errorElement = document.createElement('div')
+      errorElement.classList.add('error-message')
+      errorElement.textContent = error
+      showErrorDiv.appendChild(errorElement) // Append each error message
+    })
+    showErrorDiv.style.color = 'red' // Style error messages
   }
 
-  function clearErrorMessages() {
-    showErrorDiv.innerHTML = ""; // Clear all errors
+  function clearErrorMessages () {
+    showErrorDiv.innerHTML = '' // Clear all errors
   }
-
-  function isValidEmail(email) {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    return emailPattern.test(email);
-  }
-});
+})

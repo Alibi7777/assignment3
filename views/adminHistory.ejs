@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - API History</title>
+    <link rel="stylesheet" href="/css/admin-history.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Admin Panel - API Request History</h1>
+      <a href="/admin" class="back-btn">Back to Admin</a>
+    </header>
+
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Endpoint</th>
+            <th>User</th>
+            <th>Timestamp</th>
+            <th>Response Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% history.forEach(entry => { %>
+          <tr>
+            <td><%= entry.endpoint %></td>
+            <td>
+              <%= entry.user ? entry.user.firstname + ', id:' + entry.user.id :
+              'Guest' %> %>
+            </td>
+            <td><%= new Date(entry.timestamp).toLocaleString() %></td>
+            <td>
+              <pre><%= JSON.stringify(entry.responseData, null, 2) %></pre>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>

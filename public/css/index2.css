@@ -769,3 +769,17 @@ body.dark-mode .promo-banner {
     /* height: 200px; */
   }
 }
+.logout-button {
+  background-color: blue; /* Set background color to blue */
+  color: white; /* Set text color to white */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Add padding for better appearance */
+  font-size: 16px; /* Adjust font size */
+  cursor: pointer; /* Change cursor to pointer */
+  border-radius: 5px; /* Add rounded corners */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.logout-button:hover {
+  background-color: darkblue; /* Slightly darker blue on hover */
+}

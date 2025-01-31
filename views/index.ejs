@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electronics Shop - Home</title>
+    <link rel="stylesheet" href="/css/index2.css" />
+    <script defer src="/js/popup.js"></script>
+    <script defer src="/js/background-color.js"></script>
+    <script defer src="/js/date-time.js"></script>
+    <script defer src="/js/theme.js"></script>
+    <script defer src="/js/menu-toggle.js"></script>
+    <script defer src="/js/auth.js"></script>
+    <script defer src="/js/cart.js"></script>
+    <script defer src="/displayCart.js"></script>
+    <script defer src="/js/favourites.js"></script>
+    <script defer src="/js/displayFavourites.js"></script>
+  </head>
+  <body>
+    <header>
+      <a href="/"><h1>Electronics Shop</h1></a>
+      <nav id="nav-menu" class="nav-menu">
+        <a href="/" class="active">Home</a>
+        <a href="/cart">Cart</a>
+        <a href="/favourites">Favourites</a>
+        <a href="/faq">Faq</a>
+        <a href="/contact">Contact Us</a>
+      </nav>
+      <button id="hamburger-menu" class="hamburger">&#9776;</button>
+
+      <button
+        id="theme-toggle"
+        style="background-color: transparent; border: none"
+      >
+        <img
+          id="theme-icon"
+          src="/pictures/moon-svgrepo-com.svg"
+          alt="Toggle Theme"
+          style="max-width: 24px; max-height: 24px; cursor: pointer"
+        />
+      </button>
+
+      <% if (user) { %>
+      <a href="/profile" class="login-button"><%= user.name %></a>
+      <button id="logout-button" class="logout-button">Logout</button>
+      <% } else { %>
+      <a href="/login" class="login-button">Login</a>
+      <% } %>
+    </header>
+
+    <main class="content-container">
+      <section class="main-section">
+        <div class="highlight-box">
+          <div>
+            <h2>Best prices on phones and accessories</h2>
+            <p>Find the best deal for you</p>
+            <div class="category-links">
+              <a href="#" class="category-item active" id="category-phone"
+                >Phones <span class="arrow">→</span></a
+              >
+              <a href="#" class="category-item" id="category-tablet"
+                >Tablets <span class="arrow">→</span></a
+              >
+              <a href="#" class="category-item" id="category-earbuds"
+                >Earbuds <span class="arrow">→</span></a
+              >
+              <a href="#" class="category-item" id="category-smartwatch"
+                >Smartwatches <span class="arrow">→</span></a
+              >
+              <a href="#" class="category-item" id="category-accessory"
+                >Accessories <span class="arrow">→</span></a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="aside-banner">
+          <div class="aside-wrapper">
+            <div
+              class="aside-image"
+              style="background-image: url('/pictures/image1.png')"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="product-category">
+        <p id="product-category-name"></p>
+      </div>
+
+      <section class="product-grid" id="products_list">
+        <% products.forEach(product => { %>
+        <div class="product-card" data-id="<%= product.id %>">
+          <div class="test123">
+            <img
+              src="<%= product.image %>"
+              alt="<%= product.name %>"
+              class="product-image"
+            />
+          </div>
+          <div class="product-details">
+            <h4><%= product.name %></h4>
+            <p>Price: $<%= product.price.toFixed(2) %></p>
+            <button class="add-to-cart-btn" data-product-id="<%= product.id %>">
+              Add to Cart
+            </button>
+            <button
+              class="add-to-favourites-btn"
+              data-product-id="<%= product.id %>"
+            >
+              Add to Favourites
+            </button>
+          </div>
+        </div>
+        <% }) %>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Electronics</h3>
+        </div>
+        <div class="footer-column">
+          <h3>Pages</h3>
+          <ul>
+            <li><a href="/cart">Cart</a></li>
+            <li id="open-popup">Contact Us</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Creators</h3>
+          <ul>
+            <li>Ospan A.</li>
+            <li>Sanakov Y.</li>
+            <li>Zharasuly M.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Electronics Shop</p>
+      </div>
+    </footer>
+
+    <!-- Popup Contact Form -->
+    <div id="contact-popup" class="popup-overlay">
+      <div class="popup-content">
+        <span class="close-button" id="close-popup">&times;</span>
+        <h2>Contact Us</h2>
+        <form action="/contact/submit" method="POST">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const productContainer = document.getElementById("products_list");
+
+        document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
+          button.addEventListener("click", async (event) => {
+            const productId = event.target.getAttribute("data-product-id");
+            try {
+              const response = await fetch("/cart/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productId }),
+                credentials: "include",
+              });
+              const data = await response.json();
+              alert(data.message);
+            } catch (error) {
+              console.error("Error adding to cart:", error);
+            }
+          });
+        });
+
+        document
+          .querySelectorAll(".add-to-favourites-btn")
+          .forEach((button) => {
+            button.addEventListener("click", async (event) => {
+              const productId = event.target.getAttribute("data-product-id");
+              try {
+                const response = await fetch("/favourites/add", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ productId }),
+                  credentials: "include",
+                });
+                const data = await response.json();
+                alert(data.message);
+              } catch (error) {
+                console.error("Error adding to favourites:", error);
+              }
+            });
+          });
+
+        document
+          .getElementById("logout-button")
+          ?.addEventListener("click", async () => {
+            try {
+              await fetch("/logout", {
+                method: "POST",
+                credentials: "include",
+              });
+              window.location.href = "/";
+            } catch (error) {
+              console.error("Logout error:", error);
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
