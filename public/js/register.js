@@ -19,11 +19,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const user = { firstname, email, password }
 
     try {
-      const response = await fetch('http://localhost:3000/user/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-      })
+      const response = await fetch(
+        'https://assignment3-gp8j.onrender.com/user/register',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(user)
+        }
+      )
 
       const data = await response.json()
 
