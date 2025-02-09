@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - Items</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+    <script defer src="/js/admin-items.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Admin Panel - Item Management</h1>
+      <nav>
+        <button id="add-item-btn" class="add-item-btn">Add Item</button>
+        <a href="/admin" class="nav-link">Back to Admin</a>
+        <select id="language-picker">
+          <option value="en">English</option>
+          <option value="kz">Kazakh</option>
+        </select>
+      </nav>
+    </header>
+
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="items-table-body">
+          <% items.forEach(item => { %>
+          <tr data-item-id="<%= item.id %>">
+            <td>
+              EN: <%= item.nameEnglish %><br />
+              KZ: <%= item.nameKaz %>
+            </td>
+            <td>$<%= item.price %></td>
+            <td>
+              EN: <%= item.descriptionEnglish %><br />
+              KZ: <%= item.descriptionKaz %>
+            </td>
+            <td>
+              <button class="edit-item-btn" data-item-id="<%= item.id %>">
+                Edit
+              </button>
+              <button class="delete-item-btn" data-item-id="<%= item.id %>">
+                Delete
+              </button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </main>
+
+    <!-- Add Item Modal -->
+    <div id="add-item-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-add-item-btn">&times;</span>
+        <h2>Add Item</h2>
+        <form id="add-item-form">
+          <label for="add-name-en">Name (English):</label>
+          <input type="text" id="add-name-en" required />
+
+          <label for="add-name-kz">Name (Kazakh):</label>
+          <input type="text" id="add-name-kz" required />
+
+          <label for="add-price">Price:</label>
+          <input type="number" id="add-price" step="0.01" required />
+
+          <label for="add-description-en">Description (English):</label>
+          <textarea id="add-description-en" required></textarea>
+
+          <label for="add-description-kz">Description (Kazakh):</label>
+          <textarea id="add-description-kz" required></textarea>
+
+          <label for="add-images">Images (One URL per line):</label>
+          <textarea
+            id="add-images"
+            placeholder="Enter image URLs, one per line"
+          ></textarea>
+
+          <button type="submit">Add Item</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Item Modal -->
+    <div id="edit-item-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-edit-item-btn">&times;</span>
+        <h2>Edit Item</h2>
+        <form id="edit-item-form">
+          <input type="hidden" id="edit-item-id" />
+
+          <label for="edit-name-en">Name (English):</label>
+          <input type="text" id="edit-name-en" required />
+
+          <label for="edit-name-kz">Name (Kazakh):</label>
+          <input type="text" id="edit-name-kz" required />
+
+          <label for="edit-price">Price:</label>
+          <input type="number" id="edit-price" step="0.01" required />
+
+          <label for="edit-description-en">Description (English):</label>
+          <textarea id="edit-description-en" required></textarea>
+
+          <label for="edit-description-kz">Description (Kazakh):</label>
+          <textarea id="edit-description-kz" required></textarea>
+
+          <label for="edit-images">Images (One URL per line):</label>
+          <textarea
+            id="edit-images"
+            placeholder="Enter image URLs, one per line"
+          ></textarea>
+
+          <button type="submit">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script>
+    window.initialItems = <%- JSON.stringify(items) %>;
+  </script>
+</html>
