@@ -1,3 +1,6 @@
+/admin/items-page admin panel where can add , delete edit items and input 2 language
+language will change in main and in description
+all criterias is made
 password for db is 1234
 
 admin gmail: alibialibi@gmail.com, password: 123456789 and you have access to /admin
